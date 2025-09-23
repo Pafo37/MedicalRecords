@@ -1,0 +1,29 @@
+services:
+  keycloak: # This is the name of your service (you can call it anything, e.g., 'auth-server')
+    image: quay.io/keycloak/keycloak:26.3.2 # The Docker image to use for Keycloak
+    container_name: keycloak-server # Assigns a consistent, human-readable name to the container
+    ports:
+      - "8081:8080" # Maps host port 8081 to container port 8080
+      # This means you'll access Keycloak at http://localhost:8081
+    environment:
+      # Keycloak initial admin credentials (used for first login to the Admin Console)
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      # This line creates/uses a Docker named volume called 'keycloak_data'
+      # and mounts it to /opt/keycloak/data inside the container.
+      # This ensures your Keycloak data (realms, users, configs) persists
+      # even if you stop/remove the container.
+      - keycloak_data:/opt/keycloak/data
+    command: start-dev # The command to run when the container starts (starts Keycloak in dev mode)
+    healthcheck: # (Optional but highly recommended for multi-service apps)
+      # Defines a health check to ensure Keycloak is fully up and ready
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s # Give Keycloak some time to start before checking health
+
+# Define the named volumes used by your services
+volumes:
+  keycloak_data:
