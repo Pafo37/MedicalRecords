@@ -1,8 +1,8 @@
 package com.medicalrecords.service.appointment;
 
-import com.medicalrecords.data.dto.CreateAppointmentRequest;
-import com.medicalrecords.data.dto.CreatePrescriptionItemRequest;
-import com.medicalrecords.data.dto.CreateSickLeaveRequest;
+import com.medicalrecords.data.dto.CreateAppointmentDTO;
+import com.medicalrecords.data.dto.CreatePrescriptionItemDTO;
+import com.medicalrecords.data.dto.CreateSickLeaveDTO;
 import com.medicalrecords.data.entity.*;
 import com.medicalrecords.data.repository.*;
 import jakarta.transaction.Transactional;
@@ -26,7 +26,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     @Transactional
-    public Long create(CreateAppointmentRequest request) {
+    public Long create(CreateAppointmentDTO request) {
 
         Patient patient = patientRepository.findById(request.getPatientId())
                 .orElseThrow(() -> new IllegalArgumentException("Patient not found"));
@@ -45,23 +45,23 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
 
-        List<CreatePrescriptionItemRequest> prescriptions =
+        List<CreatePrescriptionItemDTO> prescriptions =
                 request.getPrescriptions() == null
                         ? Collections.emptyList()
                         : request.getPrescriptions();
 
-        for (CreatePrescriptionItemRequest createPrescriptionItemRequest : prescriptions) {
+        for (CreatePrescriptionItemDTO createPrescriptionItemDTO : prescriptions) {
             PrescriptionItem item = new PrescriptionItem();
             item.setAppointment(savedAppointment);
-            item.setMedicationName(createPrescriptionItemRequest.getMedicationName());
-            item.setInstructions(createPrescriptionItemRequest.getInstructions());
+            item.setMedicationName(createPrescriptionItemDTO.getMedicationName());
+            item.setInstructions(createPrescriptionItemDTO.getInstructions());
             prescriptionItemRepository.save(item);
         }
 
-        CreateSickLeaveRequest createSickLeaveRequest = request.getSickLeave();
-        if (createSickLeaveRequest != null) {
-            LocalDate startDate = createSickLeaveRequest.getStartDate();
-            int days = createSickLeaveRequest.getDays();
+        CreateSickLeaveDTO createSickLeaveDTO = request.getSickLeave();
+        if (createSickLeaveDTO != null) {
+            LocalDate startDate = createSickLeaveDTO.getStartDate();
+            int days = createSickLeaveDTO.getDays();
             LocalDate endDate = startDate.plusDays(days - 1);
 
             SickLeave sickLeave = new SickLeave();

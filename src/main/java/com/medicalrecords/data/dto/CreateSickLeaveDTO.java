@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class CreateSickLeaveRequest {
+public class CreateSickLeaveDTO {
 
     private LocalDate startDate;
     private Integer days;

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class CreateAppointmentRequest {
+public class CreateAppointmentDTO {
 
     private Long patientId;
     private Long doctorId;
@@ -15,6 +15,6 @@ public class CreateAppointmentRequest {
     private Long diagnosisId;
 
     // optional
-    private List<CreatePrescriptionItemRequest> prescriptions;
-    private CreateSickLeaveRequest sickLeave;
+    private List<CreatePrescriptionItemDTO> prescriptions;
+    private CreateSickLeaveDTO sickLeave;
 }
