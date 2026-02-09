@@ -9,8 +9,9 @@
 
 <h2>Medical Records System</h2>
 
-<div>
-    Welcome, <b sec:authentication="name"></b>
+<div sec:authorize="isAuthenticated()">
+    Welcome,
+    <b th:text="${#authentication.principal.attributes['name']}"></b>
 </div>
 
 <hr/>
@@ -44,27 +45,6 @@
     </li>
 </ul>
 
-<hr/>
-
-<h3>Dashboard</h3>
-
-<div>
-    <h4>Visits Today</h4>
-    <p th:text="${todayVisitsCount} ?: 0">0</p>
-</div>
-
-<div sec:authorize="hasRole('DOCTOR')">
-    <h4>My Weekly Visits</h4>
-    <p th:text="${myWeekVisitsCount} ?: 0">0</p>
-</div>
-
-<div sec:authorize="hasRole('PATIENT')">
-    <h4>Active Sick Leave</h4>
-    <p th:text="${hasActiveSickLeave} ? 'YES' : 'NO'">NO</p>
-</div>
-
-<hr/>
-
 <div sec:authorize="hasRole('PATIENT')">
     <h3>Insurance Status (Last 6 Months)</h3>
 
@@ -94,20 +74,6 @@
         </tr>
     </table>
 </div>
-
-<hr/>
-
-<div>
-    <h3>Recent Activity</h3>
-    <ul>
-        <li th:each="activity : ${recentActivities}"
-            th:text="${activity}">
-            Example activity
-        </li>
-    </ul>
-</div>
-
-<hr/>
 
 <div sec:authorize="isAuthenticated()">
     <form th:action="@{/logout}" method="post">

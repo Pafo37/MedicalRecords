@@ -1,6 +1,7 @@
 package com.medicalrecords.data.repository;
 
 import com.medicalrecords.data.entity.Patient;
+import com.medicalrecords.data.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -27,4 +28,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     List<Object[]> countPatientsPerPrimaryCareDoctor();
 
     boolean existsByEgn(String egn);
+
+    Optional<Patient> findByUser(User user);
 }
