@@ -59,22 +59,6 @@
 
 <hr/>
 
-<div sec:authorize="hasRole('DOCTOR')">
-    <h3>Top Diagnoses</h3>
-
-    <table border="1">
-        <tr>
-            <th>Diagnosis</th>
-            <th>Number of Patients</th>
-        </tr>
-
-        <tr th:each="row : ${topDiagnoses}">
-            <td th:text="${row.name}">Diagnosis</td>
-            <td th:text="${row.count}">0</td>
-        </tr>
-    </table>
-</div>
-
 <div sec:authorize="isAuthenticated()">
     <form th:action="@{/logout}" method="post">
         <button type="submit">Logout</button>
