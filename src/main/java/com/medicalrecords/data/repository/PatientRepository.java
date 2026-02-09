@@ -25,4 +25,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
                      doctor.lastName
            """)
     List<Object[]> countPatientsPerPrimaryCareDoctor();
+
+    boolean existsByEgn(String egn);
 }

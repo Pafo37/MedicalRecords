@@ -2,6 +2,7 @@ package com.medicalrecords.data.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -27,4 +28,12 @@ public class RegistrationDTO {
 
     @NotBlank(message = "Role is required")
     private String role;
+
+    @Pattern(regexp = "^$|\\d{10}$", message = "EGN must be exactly 10 digits")
+    private String egn;
+
+    @Pattern(regexp = "^$|.{5}$", message = "Medical id must be exactly 5 characters long")
+    private String medicalId;
+
+    private String specialty;
 }

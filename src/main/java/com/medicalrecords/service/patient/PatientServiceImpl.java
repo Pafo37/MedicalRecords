@@ -1,8 +1,10 @@
 package com.medicalrecords.service.patient;
 
 import com.medicalrecords.data.dto.CreatePatientDTO;
+import com.medicalrecords.data.dto.RegistrationDTO;
 import com.medicalrecords.data.entity.Doctor;
 import com.medicalrecords.data.entity.Patient;
+import com.medicalrecords.data.entity.User;
 import com.medicalrecords.data.repository.DoctorRepository;
 import com.medicalrecords.data.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,19 @@ public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
+
+    @Override
+    public void createFromRegistration(RegistrationDTO dto, User user) {
+
+        Patient patient = new Patient();
+        patient.setUser(user);
+        patient.setFirstName(dto.getFirstName());
+        patient.setLastName(dto.getLastName());
+        patient.setEgn(dto.getEgn());
+        patient.setInsurancePaidLast6Months(false);
+
+        patientRepository.save(patient);
+    }
 
     @Override
     public Long create(CreatePatientDTO dto) {

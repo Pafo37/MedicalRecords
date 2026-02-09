@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Register</title>
-  <meta charset="UTF-8">
+    <title>Register</title>
+    <meta charset="UTF-8">
 </head>
 <body>
 
@@ -10,58 +10,76 @@
 
 <!-- Show global error message -->
 <div th:if="${errorMessage}" style="color:red; margin-bottom:10px;">
-  <p th:text="${errorMessage}"></p>
+    <p th:text="${errorMessage}"></p>
 </div>
 
 <form th:action="@{/register}" th:object="${registrationDTO}" method="post">
 
-  <label>Username</label><br/>
-  <input type="text" th:field="*{username}" placeholder="Enter username"/>
-  <div th:if="${#fields.hasErrors('username')}"
-       th:errors="*{username}"
-       style="color:red; font-size:0.9em;"></div>
-  <br/>
+    <label>Username</label><br/>
+    <input type="text" th:field="*{username}" placeholder="Enter username"/>
+    <div th:if="${#fields.hasErrors('username')}"
+         th:errors="*{username}"
+         style="color:red; font-size:0.9em;"></div>
+    <br/>
 
-  <label>Password</label><br/>
-  <input type="password" th:field="*{password}" placeholder="Enter password"/>
-  <div th:if="${#fields.hasErrors('password')}"
-       th:errors="*{password}"
-       style="color:red; font-size:0.9em;"></div>
-  <br/>
+    <label>Password</label><br/>
+    <input type="password" th:field="*{password}" placeholder="Enter password"/>
+    <div th:if="${#fields.hasErrors('password')}"
+         th:errors="*{password}"
+         style="color:red; font-size:0.9em;"></div>
+    <br/>
 
-  <label>Email</label><br/>
-  <input type="email" th:field="*{email}" placeholder="Enter email"/>
-  <div th:if="${#fields.hasErrors('email')}"
-       th:errors="*{email}"
-       style="color:red; font-size:0.9em;"></div>
-  <br/>
+    <label>Email</label><br/>
+    <input type="email" th:field="*{email}" placeholder="Enter email"/>
+    <div th:if="${#fields.hasErrors('email')}"
+         th:errors="*{email}"
+         style="color:red; font-size:0.9em;"></div>
+    <br/>
 
-  <label>First Name</label><br/>
-  <input type="text" th:field="*{firstName}" placeholder="Enter first name"/>
-  <div th:if="${#fields.hasErrors('firstName')}"
-       th:errors="*{firstName}"
-       style="color:red; font-size:0.9em;"></div>
-  <br/>
+    <label>First Name</label><br/>
+    <input type="text" th:field="*{firstName}" placeholder="Enter first name"/>
+    <div th:if="${#fields.hasErrors('firstName')}"
+         th:errors="*{firstName}"
+         style="color:red; font-size:0.9em;"></div>
+    <br/>
 
-  <label>Last Name</label><br/>
-  <input type="text" th:field="*{lastName}" placeholder="Enter last name"/>
-  <div th:if="${#fields.hasErrors('lastName')}"
-       th:errors="*{lastName}"
-       style="color:red; font-size:0.9em;"></div>
-  <br/>
+    <label>Last Name</label><br/>
+    <input type="text" th:field="*{lastName}" placeholder="Enter last name"/>
+    <div th:if="${#fields.hasErrors('lastName')}"
+         th:errors="*{lastName}"
+         style="color:red; font-size:0.9em;"></div>
+    <br/>
 
-  <label>Role</label><br/>
-  <select th:field="*{role}">
-    <option value="">-- Select role --</option>
-    <option value="ROLE_PATIENT">Patient</option>
-    <option value="ROLE_DOCTOR">Doctor</option>
-  </select>
-  <div th:if="${#fields.hasErrors('role')}"
-       th:errors="*{role}"
-       style="color:red; font-size:0.9em;"></div>
-  <br/><br/>
+    <label>EGN (Patient only)</label><br/>
+    <input type="text" th:field="*{egn}" placeholder="EGN"/>
+    <div th:if="${#fields.hasErrors('egn')}" th:errors="*{egn}"></div>
+    <br/>
 
-  <button type="submit">Register</button>
+    <label>Medical ID (Doctor only)</label><br/>
+    <input type="text"
+           th:field="*{medicalId}"
+           placeholder="Medical ID"/>
+    <div th:if="${#fields.hasErrors('medicalId')}"
+         th:errors="*{medicalId}"></div>
+    <br/>
+
+    <label>Specialty (Doctor only)</label><br/>
+    <input type="text" th:field="*{specialty}" placeholder="Specialty"/>
+    <div th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></div>
+    <br/>
+
+    <label>Role</label><br/>
+    <select th:field="*{role}">
+        <option value="">-- Select role --</option>
+        <option value="ROLE_PATIENT">Patient</option>
+        <option value="ROLE_DOCTOR">Doctor</option>
+    </select>
+    <div th:if="${#fields.hasErrors('role')}"
+         th:errors="*{role}"
+         style="color:red; font-size:0.9em;"></div>
+    <br/><br/>
+
+    <button type="submit">Register</button>
 </form>
 
 </body>

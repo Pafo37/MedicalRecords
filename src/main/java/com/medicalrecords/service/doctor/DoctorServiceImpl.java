@@ -1,7 +1,9 @@
 package com.medicalrecords.service.doctor;
 
 import com.medicalrecords.data.dto.CreateDoctorDTO;
+import com.medicalrecords.data.dto.RegistrationDTO;
 import com.medicalrecords.data.entity.Doctor;
+import com.medicalrecords.data.entity.User;
 import com.medicalrecords.data.repository.DoctorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,18 @@ public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
 
+    @Override
+    public void createFromRegistration(RegistrationDTO dto, User user) {
+        Doctor doctor = new Doctor();
+        doctor.setUser(user);
+        doctor.setMedicalId(dto.getMedicalId());
+        doctor.setSpecialty(dto.getSpecialty());
+        doctor.setPersonalDoctor(false);
+        doctor.setFirstName(dto.getFirstName());
+        doctor.setLastName(dto.getLastName());
+
+        doctorRepository.save(doctor);
+    }
     @Override
     public Long create(CreateDoctorDTO dto) {
 

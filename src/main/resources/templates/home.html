@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Records - Home</title>
+</head>
+<body>
+
+<h2>Medical Records System</h2>
+
+<div>
+    Welcome, <b sec:authentication="name"></b>
+</div>
+
+<hr/>
+
+<!-- Navigation -->
+<ul>
+    <li><a th:href="@{/}">Home</a></li>
+
+    <li sec:authorize="hasRole('PATIENT')">
+        <a th:href="@{/patient/me}">My Record</a>
+    </li>
+
+    <li sec:authorize="hasRole('PATIENT')">
+        <a th:href="@{/patient/visits}">My Visits</a>
+    </li>
+
+    <li sec:authorize="hasRole('PATIENT')">
+        <a th:href="@{/patient/sick-leaves}">My Sick Leaves</a>
+    </li>
+
+    <li sec:authorize="hasRole('DOCTOR')">
+        <a th:href="@{/doctor/patients}">Patients</a>
+    </li>
+
+    <li sec:authorize="hasRole('DOCTOR')">
+        <a th:href="@{/doctor/visits}">Visits</a>
+    </li>
+
+    <li sec:authorize="hasRole('DOCTOR')">
+        <a th:href="@{/doctor/reports}">Reports</a>
+    </li>
+</ul>
+
+<hr/>
+
+<h3>Dashboard</h3>
+
+<div>
+    <h4>Visits Today</h4>
+    <p th:text="${todayVisitsCount} ?: 0">0</p>
+</div>
+
+<div sec:authorize="hasRole('DOCTOR')">
+    <h4>My Weekly Visits</h4>
+    <p th:text="${myWeekVisitsCount} ?: 0">0</p>
+</div>
+
+<div sec:authorize="hasRole('PATIENT')">
+    <h4>Active Sick Leave</h4>
+    <p th:text="${hasActiveSickLeave} ? 'YES' : 'NO'">NO</p>
+</div>
+
+<hr/>
+
+<div sec:authorize="hasRole('PATIENT')">
+    <h3>Insurance Status (Last 6 Months)</h3>
+
+    <div th:if="${insurancePaidLast6Months == false}">
+        Insurance NOT paid in the last 6 months.
+    </div>
+
+    <div th:if="${insurancePaidLast6Months == true}">
+        Insurance is paid.
+    </div>
+</div>
+
+<hr/>
+
+<div sec:authorize="hasRole('DOCTOR')">
+    <h3>Top Diagnoses</h3>
+
+    <table border="1">
+        <tr>
+            <th>Diagnosis</th>
+            <th>Number of Patients</th>
+        </tr>
+
+        <tr th:each="row : ${topDiagnoses}">
+            <td th:text="${row.name}">Diagnosis</td>
+            <td th:text="${row.count}">0</td>
+        </tr>
+    </table>
+</div>
+
+<hr/>
+
+<div>
+    <h3>Recent Activity</h3>
+    <ul>
+        <li th:each="activity : ${recentActivities}"
+            th:text="${activity}">
+            Example activity
+        </li>
+    </ul>
+</div>
+
+<hr/>
+
+<div sec:authorize="isAuthenticated()">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+
+<div sec:authorize="isAnonymous()">
+    <a th:href="@{/oauth2/authorization/keycloak}">Login</a>
+</div>
+
+</body>
+</html>

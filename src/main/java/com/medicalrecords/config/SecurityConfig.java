@@ -56,6 +56,12 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .oidcUserService(oidcUserService())
                         )
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("http://localhost:8081/realms/medical-records-app/protocol/openid-connect/logout?redirect_uri=http://localhost:8080/")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID")
                 );
 
         return http.build();

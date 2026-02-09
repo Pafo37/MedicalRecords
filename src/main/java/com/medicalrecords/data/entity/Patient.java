@@ -26,11 +26,19 @@ public class Patient extends BaseEntity {
     @Column(name = "egn", nullable = false, unique = true, length = 10)
     private String egn;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "primary_care_doctor_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "primary_care_doctor_id")
     private Doctor primaryCareDoctor;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    //TODO: check how the should this work
     @OneToMany(mappedBy = "patient", orphanRemoval = true)
     private List<HealthInsurance> healthInsurances = new ArrayList<>();
+
+    @Column(name = "is_insurance_paid_last_six_months")
+    private boolean isInsurancePaidLast6Months = false;
 
 }
