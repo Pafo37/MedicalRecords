@@ -59,6 +59,12 @@
 
 <hr/>
 
+<div sec:authorize="hasRole('PATIENT')">
+    <a th:href="@{/primary-care-doctor/choose}">
+        Choose Primary Care Doctor
+    </a>
+</div>
+
 <div sec:authorize="isAuthenticated()">
     <form th:action="@{/logout}" method="post">
         <button type="submit">Logout</button>
