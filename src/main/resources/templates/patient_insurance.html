@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Insurance</title>
+</head>
+<body>
+
+<h2>Insurance Status (Last 6 Months)</h2>
+
+<div>
+  Overall (last 6 months paid):
+  <b th:text="${patient.insurancePaidLast6Months} ? 'YES' : 'NO'">NO</b>
+</div>
+
+<br/>
+
+<table border="1">
+  <tr>
+    <th>Month</th>
+    <th>Paid</th>
+    <th>Action</th>
+  </tr>
+
+  <tr th:each="row : ${lastSixMonths}">
+    <td th:text="${row.month}">2026-02</td>
+
+    <td th:text="${row.paid} ? 'YES' : 'NO'">NO</td>
+
+    <td>
+      <div th:if="${!row.paid}">
+        <form th:action="@{/patient/insurance/pay}" method="post">
+          <input type="hidden" name="month" th:value="${row.month}"/>
+          <button type="submit">Pay</button>
+        </form>
+      </div>
+
+      <div th:if="${row.paid}">
+        Paid on <span th:text="${row.paidAt}">2026-02-09</span>
+      </div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

@@ -43,19 +43,11 @@
     <li sec:authorize="hasRole('DOCTOR')">
         <a th:href="@{/doctor/reports}">Reports</a>
     </li>
+
+    <li sec:authorize="hasRole('PATIENT')">
+        <a th:href="@{/patient/insurance}">Insurance</a>
+    </li>
 </ul>
-
-<div sec:authorize="hasRole('PATIENT')">
-    <h3>Insurance Status (Last 6 Months)</h3>
-
-    <div th:if="${insurancePaidLast6Months == false}">
-        Insurance NOT paid in the last 6 months.
-    </div>
-
-    <div th:if="${insurancePaidLast6Months == true}">
-        Insurance is paid.
-    </div>
-</div>
 
 <hr/>
 
