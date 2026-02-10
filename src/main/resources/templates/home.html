@@ -47,6 +47,10 @@
     <li sec:authorize="hasRole('PATIENT')">
         <a th:href="@{/patient/insurance}">Insurance</a>
     </li>
+
+    <li sec:authorize="hasRole('PATIENT')">
+        <a th:href="@{/patient/appointment/create}">Create Visit</a>
+    </li>
 </ul>
 
 <hr/>

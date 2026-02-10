@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Book Appointment</title>
+</head>
+
+<body>
+
+<div sec:authorize="hasRole('PATIENT')">
+
+    <h2>Book Appointment</h2>
+
+    <!-- Error message -->
+    <div th:if="${error}" style="color:red; margin-bottom:15px;">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form th:action="@{/patient/appointment/create}"
+          th:object="${dto}"
+          method="post">
+
+        <!-- Doctor Selection -->
+        <div>
+            <label>Select Doctor:</label>
+            <select th:field="*{doctorId}" required>
+                <option value="" disabled selected>-- Choose Doctor --</option>
+                <option th:each="doctor : ${doctors}"
+                        th:value="${doctor.id}"
+                        th:text="${doctor.user.firstName + ' ' + doctor.user.lastName + ' - ' + doctor.specialty}">
+                </option>
+            </select>
+
+            <div th:if="${#fields.hasErrors('doctorId')}" style="color:red;">
+                <p th:errors="*{doctorId}"></p>
+            </div>
+        </div>
+
+        <!-- Appointment Date & Time -->
+        <div style="margin-top:15px;">
+            <label>Appointment Date & Time:</label>
+            <input type="datetime-local"
+                   th:field="*{visitDate}"
+                   required />
+
+            <div th:if="${#fields.hasErrors('visitDate')}" style="color:red;">
+                <p th:errors="*{visitDate}"></p>
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div style="margin-top:15px;">
+            <label>Notes:</label><br/>
+            <textarea th:field="*{notes}" rows="5" cols="60" required></textarea>
+
+            <div th:if="${#fields.hasErrors('notes')}" style="color:red;">
+                <p th:errors="*{notes}"></p>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div style="margin-top:20px;">
+            <button type="submit">Book Appointment</button>
+            <a th:href="@{/home}" style="margin-left:10px;">Cancel</a>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- Non-patient fallback -->
+<div sec:authorize="!hasRole('PATIENT')">
+    <p>You do not have access to this page.</p>
+</div>
+
+</body>
+</html>

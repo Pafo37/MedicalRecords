@@ -9,9 +9,5 @@ import java.util.List;
 
 public interface StatisticsService {
 
-    List<PatientsPerDiagnosisStatisticsDTO> getPatientsPerDiagnosisStatistics();
 
-    List<PatientsPerDoctorStatisticsDTO> getPatientsPerDoctorStatistics();
-
-    List<AppointmentsPerDoctorStatisticsDTO> getAppointmentsPerDoctorStatistics();
 }

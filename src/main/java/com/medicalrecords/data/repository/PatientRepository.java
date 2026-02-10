@@ -30,4 +30,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     boolean existsByEgn(String egn);
 
     Optional<Patient> findByUser(User user);
+
+    Optional<Patient> findByUser_KeycloakId(String keycloakId);
 }
