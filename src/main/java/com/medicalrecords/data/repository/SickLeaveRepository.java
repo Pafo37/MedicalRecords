@@ -9,11 +9,5 @@ import java.util.Optional;
 
 public interface SickLeaveRepository extends JpaRepository<SickLeave, Long> {
 
-    Optional<SickLeave> findByAppointmentId(Long appointmentId);
-
-    List<SickLeave> findAllByPatientIdOrderByStartDateDesc(Long patientId);
-
-    List<SickLeave> findAllByDoctorIdOrderByStartDateDesc(Long doctorId);
-
-    List<SickLeave> findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(LocalDate date1, LocalDate date2);
+    Optional<SickLeave> findByAppointment_Id(Long appointmentId);
 }

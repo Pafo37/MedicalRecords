@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Appointments</title>
+</head>
+<body>
+
+<div sec:authorize="hasRole('DOCTOR')">
+    <h2>My Appointments</h2>
+
+    <table border="1" cellpadding="6">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Patient</th>
+            <th>Patient Notes</th>
+            <th>Open</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${#temporals.format(appointment.visitDate, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${appointment.patient.user.firstName + ' ' + appointment.patient.user.lastName}"></td>
+            <td th:text="${appointment.notes}"></td>
+            <td>
+                <a th:href="@{'/doctor/appointments/' + ${appointment.id}}">View</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p style="margin-top:15px;"><a th:href="@{/}">Home</a></p>
+</div>
+
+<div sec:authorize="!hasRole('DOCTOR')">
+    <p>No access.</p>
+</div>
+
+</body>
+</html>

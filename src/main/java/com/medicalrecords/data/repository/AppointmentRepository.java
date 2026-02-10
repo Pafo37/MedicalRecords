@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
-    List<Appointment> findAllByPatient_IdOrderByVisitDateDesc(Long patientId);
+    List<Appointment> findAllByDoctor_User_KeycloakIdOrderByVisitDateAsc(String doctorKeycloakId);
 
-    List<Appointment> findAllByDoctor_IdOrderByVisitDateDesc(Long doctorId);
+    Optional<Appointment> findByIdAndDoctor_User_KeycloakId(Long appointmentId, String doctorKeycloakId);
 
 }

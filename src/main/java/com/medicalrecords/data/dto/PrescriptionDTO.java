@@ -1,10 +1,11 @@
 package com.medicalrecords.data.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
-public class CreatePrescriptionItemDTO {
+public class PrescriptionDTO {
 
-    private String medicationName;
     private String instructions;
 }

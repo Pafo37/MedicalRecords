@@ -31,6 +31,9 @@ public class Appointment extends BaseEntity {
     @Column(length = 2000)
     private String notes;
 
+    @Column(name = "doctor_notes", length = 4000)
+    private String doctorNotes;
+
     @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Diagnosis> diagnoses = new ArrayList<>();

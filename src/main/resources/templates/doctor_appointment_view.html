@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Details</title>
+</head>
+<body>
+
+<div sec:authorize="hasRole('DOCTOR')">
+
+    <p><a th:href="@{/doctor/appointments}">← Back to appointments</a></p>
+
+    <h2>Appointment Details</h2>
+
+    <div th:if="${error}" style="color:red; margin-bottom:10px;">
+        <p th:text="${error}"></p>
+    </div>
+
+    <div th:if="${success}" style="color:green; margin-bottom:10px;">
+        <p th:text="${success}"></p>
+    </div>
+
+    <p><b>Date:</b>
+        <span th:text="${#temporals.format(appointment.visitDate, 'dd/MM/yyyy HH:mm')}"></span>
+    </p>
+
+    <p><b>Patient:</b>
+        <span th:text="${appointment.patient.user.firstName + ' ' + appointment.patient.user.lastName}"></span>
+    </p>
+
+    <p><b>Patient notes:</b>
+        <span th:text="${appointment.notes}"></span>
+    </p>
+
+    <div th:if="${!canComplete}" style="margin:15px 0; color:darkorange;">
+        You can view this appointment, but you can add notes/prescriptions/sick leave only on the scheduled day.
+    </div>
+
+    <hr/>
+
+    <!-- ✅ ONE FORM for everything (only if canComplete) -->
+    <div th:if="${canComplete}">
+        <form th:action="@{'/doctor/appointments/' + ${appointment.id} + '/complete'}"
+              th:object="${completeForm}"
+              method="post">
+
+            <h3>Doctor Notes (well-being / examination)</h3>
+            <textarea th:field="*{doctorNotes}" rows="6" cols="90"></textarea>
+
+            <hr/>
+
+            <h3>Prescription</h3>
+            <div>
+                <label>Instructions:</label><br/>
+                <textarea th:field="*{prescriptionInstructions}" rows="5" cols="90"></textarea>
+                <p style="font-size: 12px; color: gray;">
+                    Leave empty if you are not adding a prescription.
+                </p>
+            </div>
+
+            <hr/>
+
+            <h3>Sick Leave</h3>
+
+            <div th:if="${existingSickLeave != null}" style="margin-bottom:10px;">
+                <p>
+                    <b>Current:</b>
+                    <span th:text="${#temporals.format(existingSickLeave.startDate, 'dd/MM/yyyy')}"></span>
+                    -
+                    <span th:text="${#temporals.format(existingSickLeave.endDate, 'dd/MM/yyyy')}"></span>
+                </p>
+            </div>
+
+            <div>
+                <label>Start date:</label>
+                <input type="date" th:field="*{sickLeaveStartDate}" />
+            </div>
+
+            <div>
+                <label>End date:</label>
+                <input type="date" th:field="*{sickLeaveEndDate}" />
+            </div>
+
+            <div style="margin-top:20px;">
+                <button type="submit">Save and Exit</button>
+                <a th:href="@{/doctor/appointments}" style="margin-left:10px;">Cancel</a>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- ✅ Read-only mode when not allowed to complete -->
+    <div th:if="${!canComplete}">
+
+        <h3>Doctor Notes</h3>
+        <pre th:text="${appointment.doctorNotes}"></pre>
+
+        <hr/>
+
+        <h3>Prescriptions</h3>
+        <ul>
+            <li th:each="prescription : ${existingPrescriptions}"
+                th:text="${prescription.instructions}">
+            </li>
+        </ul>
+
+        <hr/>
+
+        <h3>Sick Leave</h3>
+        <div th:if="${existingSickLeave != null}">
+            <p>
+                <b>Current:</b>
+                <span th:text="${#temporals.format(existingSickLeave.startDate, 'dd/MM/yyyy')}"></span>
+                -
+                <span th:text="${#temporals.format(existingSickLeave.endDate, 'dd/MM/yyyy')}"></span>
+            </p>
+        </div>
+        <div th:if="${existingSickLeave == null}">
+            <p>No sick leave.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<div sec:authorize="!hasRole('DOCTOR')">
+    <p>No access.</p>
+</div>
+
+</body>
+</html>

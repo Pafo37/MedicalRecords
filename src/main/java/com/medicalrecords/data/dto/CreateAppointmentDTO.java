@@ -15,6 +15,6 @@ public class CreateAppointmentDTO {
     private Long diagnosisId;
 
     // optional
-    private List<CreatePrescriptionItemDTO> prescriptions;
+    private List<PrescriptionDTO> prescriptions;
     private CreateSickLeaveDTO sickLeave;
 }
