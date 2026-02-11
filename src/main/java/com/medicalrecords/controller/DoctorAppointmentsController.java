@@ -44,8 +44,12 @@ public class DoctorAppointmentsController {
         String doctorKeycloakId = authenticatedUser.getSubject();
         Appointment appointment = appointmentService.getAppointmentForDoctor(appointmentId, doctorKeycloakId);
 
-        LocalDate today = LocalDate.now();
-        boolean doctorCanCompleteToday = appointment.getVisitDate().toLocalDate().equals(today);
+        boolean isSameDay = appointment.getVisitDate().toLocalDate().equals(LocalDate.now());
+        boolean doctorCanCompleteToday = isSameDay && !appointment.isCompleted();
+
+        model.addAttribute("canComplete", doctorCanCompleteToday);
+        model.addAttribute("isCompleted", appointment.isCompleted());
+
 
         model.addAttribute("appointment", appointment);
         model.addAttribute("canComplete", doctorCanCompleteToday);

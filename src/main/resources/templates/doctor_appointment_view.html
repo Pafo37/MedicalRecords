@@ -106,6 +106,20 @@
             </li>
         </ul>
 
+        <div th:if="${existingPrescriptions != null and !existingPrescriptions.isEmpty()}">
+            <h4>Saved prescriptions</h4>
+            <ul>
+                <li th:each="prescription : ${existingPrescriptions}"
+                    th:text="${prescription.instructions}">
+                </li>
+            </ul>
+        </div>
+
+        <div th:if="${existingPrescriptions == null or existingPrescriptions.isEmpty()}">
+            <p>No prescriptions.</p>
+        </div>
+
+
         <hr/>
 
         <h3>Sick Leave</h3>

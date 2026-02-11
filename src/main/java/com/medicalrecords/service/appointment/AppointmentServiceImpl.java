@@ -116,7 +116,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         // 1) Save doctor notes
         appointment.setDoctorNotes(formData.getDoctorNotes());
-        appointmentRepository.save(appointment);
 
         // 2) Create prescription if instructions provided
         String prescriptionInstructions = formData.getPrescriptionInstructions();
@@ -125,6 +124,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                     .appointment(appointment)
                     .instructions(prescriptionInstructions.trim())
                     .build();
+            appointment.setPrescriptionInstructions(formData.getPrescriptionInstructions());
             prescriptionRepository.save(prescription);
         }
 
@@ -135,5 +135,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         sickLeave.setEndDate(formData.getSickLeaveEndDate());
 
         sickLeaveRepository.save(sickLeave);
+
+        appointment.setCompleted(true);
+        appointmentRepository.save(appointment);
+
     }
 }

@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity
@@ -34,11 +32,15 @@ public class Appointment extends BaseEntity {
     @Column(name = "doctor_notes", length = 4000)
     private String doctorNotes;
 
-    @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<Diagnosis> diagnoses = new ArrayList<>();
-
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
     private SickLeave sickLeave;
+
+    @Column(name = "prescription_instructions", length = 4000)
+    private String prescriptionInstructions;
+
+    @Column(name = "completed", nullable = false)
+    @Builder.Default
+    private boolean completed = false;
+
 
 }
