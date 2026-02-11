@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment</title>
+</head>
+<body>
+
+<div sec:authorize="hasRole('PATIENT')">
+
+    <p><a th:href="@{/patient/appointments}">← Back to my appointments</a></p>
+
+    <h2>Appointment</h2>
+
+    <p><b>Date:</b> <span th:text="${#temporals.format(appointment.visitDate, 'dd/MM/yyyy HH:mm')}"></span></p>
+
+    <p><b>Doctor:</b>
+        <span th:text="${appointment.doctor.user.firstName + ' ' + appointment.doctor.user.lastName}"></span>
+        (<span th:text="${appointment.doctor.specialty}"></span>)
+    </p>
+
+    <p><b>Your notes:</b> <span th:text="${appointment.notes}"></span></p>
+
+    <hr/>
+
+    <h3>Doctor Notes</h3>
+    <div th:if="${appointment.completed}">
+        <pre th:text="${appointment.doctorNotes}"></pre>
+    </div>
+    <div th:if="${!appointment.completed}">
+        <p>Not completed yet.</p>
+    </div>
+
+    <hr/>
+
+    <h3>Prescription</h3>
+    <div th:if="${appointment.completed and appointment.prescriptionInstructions != null}">
+        <pre th:text="${appointment.prescriptionInstructions}"></pre>
+    </div>
+    <div th:if="${!appointment.completed or appointment.prescriptionInstructions == null}">
+        <p>No prescription.</p>
+    </div>
+
+    <hr/>
+
+    <h3>Sick Leave</h3>
+    <div th:if="${sickLeave != null}">
+        <p>
+            <b>From:</b> <span th:text="${#temporals.format(sickLeave.startDate, 'dd/MM/yyyy')}"></span>
+            <b>To:</b> <span th:text="${#temporals.format(sickLeave.endDate, 'dd/MM/yyyy')}"></span>
+        </p>
+    </div>
+    <div th:if="${sickLeave == null}">
+        <p>No sick leave.</p>
+    </div>
+
+</div>
+
+<div sec:authorize="!hasRole('PATIENT')">
+    <p>No access.</p>
+</div>
+
+</body>
+</html>

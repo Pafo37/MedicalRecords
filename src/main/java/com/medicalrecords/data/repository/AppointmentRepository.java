@@ -14,4 +14,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     Optional<Appointment> findByIdAndDoctor_User_KeycloakId(Long appointmentId, String doctorKeycloakId);
 
+    List<Appointment> findAllByPatient_User_KeycloakIdOrderByVisitDateAsc(String patientKeycloakId);
+
+    Optional<Appointment> findByIdAndPatient_User_KeycloakId(Long appointmentId, String patientKeycloakId);
+
 }
