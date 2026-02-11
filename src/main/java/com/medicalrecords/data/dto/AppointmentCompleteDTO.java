@@ -1,5 +1,6 @@
 package com.medicalrecords.data.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,5 +18,8 @@ public class AppointmentCompleteDTO {
 
     private LocalDate sickLeaveStartDate;
     private LocalDate sickLeaveEndDate;
+
+    @NotBlank
+    private String diagnosis;
 
 }

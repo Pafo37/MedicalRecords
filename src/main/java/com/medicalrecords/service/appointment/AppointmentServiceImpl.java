@@ -22,6 +22,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final DoctorRepository doctorRepository;
     private final PrescriptionRepository prescriptionRepository;
     private final SickLeaveRepository sickLeaveRepository;
+    private final DiagnosisRepository diagnosisRepository;
 
 
     @Override
@@ -150,6 +151,25 @@ public class AppointmentServiceImpl implements AppointmentService {
 
             sickLeaveRepository.save(sickLeave);
         }
+
+        String diagnosisText = formData.getDiagnosis();
+
+        if (diagnosisText == null || diagnosisText.trim().isEmpty()) {
+            throw new IllegalArgumentException("Diagnosis is required.");
+        }
+
+        String normalizedDiagnosis = diagnosisText.trim().toLowerCase();
+
+        Diagnosis diagnosis = diagnosisRepository
+                .findByNameIgnoreCase(normalizedDiagnosis)
+                .orElseGet(() -> diagnosisRepository.save(
+                        Diagnosis.builder()
+                                .name(normalizedDiagnosis)
+                                .build()
+                ));
+
+        appointment.setDiagnosis(diagnosis);
+
 
         appointment.setCompleted(true);
         appointmentRepository.save(appointment);

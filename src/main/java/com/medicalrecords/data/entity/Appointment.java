@@ -35,6 +35,11 @@ public class Appointment extends BaseEntity {
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
     private SickLeave sickLeave;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "diagnosis_id")
+    private Diagnosis diagnosis;
+
+
     @Column(name = "prescription_instructions", length = 4000)
     private String prescriptionInstructions;
 

@@ -34,8 +34,14 @@
         <span th:text="${appointment.notes}"></span>
     </p>
 
-    <div th:if="${!canComplete}" style="margin:15px 0; color:darkorange;">
+    <!-- Not today -->
+    <div th:if="${!isScheduledForToday}" style="margin:15px 0; color:darkorange;">
         You can view this appointment, but you can add notes/prescriptions/sick leave only on the scheduled day.
+    </div>
+
+    <!-- Completed (even if today) -->
+    <div th:if="${isCompleted}" style="margin:15px 0; color:darkorange;">
+        This appointment is completed and is now read-only.
     </div>
 
     <hr/>
@@ -45,6 +51,11 @@
         <form th:action="@{'/doctor/appointments/' + ${appointment.id} + '/complete'}"
               th:object="${completeForm}"
               method="post">
+
+            <h3>Diagnosis</h3>
+            <textarea th:field="*{diagnosis}" rows="2" cols="90" required></textarea>
+
+            <hr/>
 
             <h3>Doctor Notes (well-being / examination)</h3>
             <textarea th:field="*{doctorNotes}" rows="6" cols="90"></textarea>
@@ -93,6 +104,10 @@
 
     <!-- ✅ Read-only mode when not allowed to complete -->
     <div th:if="${!canComplete}">
+
+        <h3>Diagnosis</h3>
+        <pre th:text="${appointment.diagnosis != null ? appointment.diagnosis.name : 'Not set'}"></pre>
+
 
         <h3>Doctor Notes</h3>
         <pre th:text="${appointment.doctorNotes}"></pre>

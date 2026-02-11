@@ -25,6 +25,23 @@
 
     <hr/>
 
+    <h3>Diagnosis</h3>
+
+    <div th:if="${appointment.completed}">
+        <p th:if="${appointment.diagnosis != null}">
+            <b>Diagnosis:</b> <span th:text="${appointment.diagnosis.name}"></span>
+        </p>
+
+        <p th:if="${appointment.diagnosis == null}">
+            No diagnosis recorded.
+        </p>
+    </div>
+
+    <div th:if="${!appointment.completed}">
+        <p>Not completed yet.</p>
+    </div>
+
+
     <h3>Doctor Notes</h3>
     <div th:if="${appointment.completed}">
         <pre th:text="${appointment.doctorNotes}"></pre>

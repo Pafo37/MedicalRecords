@@ -44,15 +44,18 @@ public class DoctorAppointmentsController {
         String doctorKeycloakId = authenticatedUser.getSubject();
         Appointment appointment = appointmentService.getAppointmentForDoctor(appointmentId, doctorKeycloakId);
 
-        boolean isSameDay = appointment.getVisitDate().toLocalDate().equals(LocalDate.now());
-        boolean doctorCanCompleteToday = isSameDay && !appointment.isCompleted();
+        LocalDate today = LocalDate.now();
+        LocalDate appointmentDay = appointment.getVisitDate().toLocalDate();
 
-        model.addAttribute("canComplete", doctorCanCompleteToday);
-        model.addAttribute("isCompleted", appointment.isCompleted());
-
+        boolean isScheduledForToday = appointmentDay.equals(today);
+        boolean isCompleted = appointment.isCompleted();
+        boolean canComplete = isScheduledForToday && !isCompleted;
 
         model.addAttribute("appointment", appointment);
-        model.addAttribute("canComplete", doctorCanCompleteToday);
+        model.addAttribute("canComplete", canComplete);
+        model.addAttribute("isScheduledForToday", isScheduledForToday);
+        model.addAttribute("isCompleted", isCompleted);
+
 
         model.addAttribute("doctorNotesForm", AppointmentDoctorNotesDTO.builder()
                 .doctorNotes(appointment.getDoctorNotes() == null ? "" : appointment.getDoctorNotes())
@@ -69,8 +72,8 @@ public class DoctorAppointmentsController {
 
         model.addAttribute("completeForm", AppointmentCompleteDTO.builder()
                 .doctorNotes(appointment.getDoctorNotes() == null ? "" : appointment.getDoctorNotes())
+                .diagnosis(appointment.getDiagnosis() == null ? "" : appointment.getDiagnosis().getName())
                 .build());
-
 
         return "doctor_appointment_view";
     }
