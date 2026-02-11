@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Primary Patient Statistics</title>
+</head>
+<body>
+
+<h2>Doctor Primary Patient Statistics</h2>
+
+<p>
+    <a th:href="@{/}">Home</a>
+</p>
+
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+    <tr>
+        <th>Doctor ID</th>
+        <th>Medical ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Primary Patients</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${doctorPrimaryPatientStatistics}">
+        <td th:text="${row.doctorId}"></td>
+        <td th:text="${row.doctorMedicalId}"></td>
+        <td th:text="${row.doctorFirstName}"></td>
+        <td th:text="${row.doctorLastName}"></td>
+        <td th:text="${row.primaryPatientCount}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

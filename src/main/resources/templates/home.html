@@ -47,7 +47,21 @@
     </li>
 
     <li sec:authorize="hasRole('DOCTOR')">
-        <a th:href="@{/doctor/reports}">Reports</a>
+        <a th:href="@{/doctor/statistics/diagnosis_statistics}">
+            Diagnosis Statistics
+        </a>
+    </li>
+
+    <li sec:authorize="hasRole('DOCTOR')">
+        <a th:href="@{/doctor/statistics/doctor_primary_patient_statistics}">
+            Primary Patient Statistics
+        </a>
+    </li>
+
+    <li sec:authorize="hasRole('DOCTOR')">
+        <a th:href="@{/doctor/statistics/doctor_appointment_statistics}">
+            Doctor Appointment Statistics
+        </a>
     </li>
 
 </ul>

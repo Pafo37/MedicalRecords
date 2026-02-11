@@ -1,16 +1,15 @@
 package com.medicalrecords.data.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PatientsPerDiagnosisStatisticsDTO {
-
-    private Long diagnosisId;
+public class DiagnosisPatientCountDTO {
     private String diagnosisName;
-    private Long patientsCount;
-
+    private Long distinctPatientCount;
 }

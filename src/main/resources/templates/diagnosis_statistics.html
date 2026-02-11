@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Diagnosis Statistics</title>
+</head>
+<body>
+
+<h2>Diagnosis Statistics</h2>
+
+<p>
+    <a th:href="@{/}">Home</a>
+</p>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Diagnosis</th>
+        <th>Distinct Patients</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${diagnosisStatistics}">
+        <td th:text="${row.diagnosisName}"></td>
+        <td th:text="${row.distinctPatientCount}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
