@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface SickLeaveRepository extends JpaRepository<SickLeave, Long> {
 
     Optional<SickLeave> findByAppointment_Id(Long appointmentId);
+
+    List<SickLeave> findAllByAppointment_Patient_User_KeycloakIdOrderByStartDateDesc(String patientKeycloakId);
+
 }

@@ -18,18 +18,28 @@
 
 <!-- Navigation -->
 <ul>
-    <li><a th:href="@{/}">Home</a></li>
-
     <li sec:authorize="hasRole('PATIENT')">
         <a th:href="@{/patient/me}">My Record</a>
     </li>
 
     <li sec:authorize="hasRole('PATIENT')">
-        <a th:href="@{/patient/appointments}">My Appointments</a>
+        <a th:href="@{/patient/appointments}">Appointments</a>
+    </li>
+
+    <li sec:authorize="hasRole('PATIENT')">
+        <a th:href="@{/patient/appointment/create}">Book an appointment</a>
     </li>
 
     <li sec:authorize="hasRole('PATIENT')">
         <a th:href="@{/patient/sick-leaves}">My Sick Leaves</a>
+    </li>
+
+    <li sec:authorize="hasRole('PATIENT')">
+        <a th:href="@{/patient/insurance}">Insurance</a>
+    </li>
+
+    <li sec:authorize="hasRole('PATIENT')">
+        <a th:href="@{/primary-care-doctor/choose}">Choose Primary Care Doctor</a>
     </li>
 
     <li sec:authorize="hasRole('DOCTOR')">
@@ -44,22 +54,9 @@
         <a th:href="@{/doctor/reports}">Reports</a>
     </li>
 
-    <li sec:authorize="hasRole('PATIENT')">
-        <a th:href="@{/patient/insurance}">Insurance</a>
-    </li>
-
-    <li sec:authorize="hasRole('PATIENT')">
-        <a th:href="@{/patient/appointment/create}">Create Visit</a>
-    </li>
 </ul>
 
 <hr/>
-
-<div sec:authorize="hasRole('PATIENT')">
-    <a th:href="@{/primary-care-doctor/choose}">
-        Choose Primary Care Doctor
-    </a>
-</div>
 
 <div sec:authorize="isAuthenticated()">
     <form th:action="@{/logout}" method="post">

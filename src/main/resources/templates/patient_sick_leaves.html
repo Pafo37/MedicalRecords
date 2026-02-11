@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>My Sick Leaves</title>
+</head>
+<body>
+
+<div sec:authorize="hasRole('PATIENT')">
+
+    <h2>My Sick Leaves</h2>
+
+    <table border="1" cellpadding="6">
+        <thead>
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Doctor</th>
+            <th>Appointment Date</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:if="${sickLeaves == null or sickLeaves.isEmpty()}">
+            <td colspan="4">No sick leaves.</td>
+        </tr>
+
+        <tr th:each="sickLeave : ${sickLeaves}">
+            <td th:text="${#temporals.format(sickLeave.startDate, 'dd/MM/yyyy')}"></td>
+            <td th:text="${#temporals.format(sickLeave.endDate, 'dd/MM/yyyy')}"></td>
+            <td th:text="${sickLeave.appointment.doctor.user.firstName + ' ' + sickLeave.appointment.doctor.user.lastName}"></td>
+            <td th:text="${#temporals.format(sickLeave.appointment.visitDate, 'dd/MM/yyyy HH:mm')}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <p style="margin-top:15px;">
+        <a th:href="@{/}">Home</a>
+    </p>
+
+</div>
+
+<div sec:authorize="!hasRole('PATIENT')">
+    <p>No access.</p>
+</div>
+
+</body>
+</html>

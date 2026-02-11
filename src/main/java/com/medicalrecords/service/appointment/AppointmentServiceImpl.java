@@ -128,13 +128,28 @@ public class AppointmentServiceImpl implements AppointmentService {
             prescriptionRepository.save(prescription);
         }
 
-        SickLeave sickLeave = sickLeaveRepository.findByAppointment_Id(appointmentId)
-                .orElseGet(() -> SickLeave.builder().appointment(appointment).build());
+        LocalDate sickLeaveStartDate = formData.getSickLeaveStartDate();
+        LocalDate sickLeaveEndDate = formData.getSickLeaveEndDate();
 
-        sickLeave.setStartDate(formData.getSickLeaveStartDate());
-        sickLeave.setEndDate(formData.getSickLeaveEndDate());
+        boolean hasAnySickLeaveField = sickLeaveStartDate != null || sickLeaveEndDate != null;
 
-        sickLeaveRepository.save(sickLeave);
+        if (hasAnySickLeaveField) {
+            if (sickLeaveStartDate == null || sickLeaveEndDate == null) {
+                throw new IllegalArgumentException("Sick leave requires both start and end date.");
+            }
+
+            if (sickLeaveEndDate.isBefore(sickLeaveStartDate)) {
+                throw new IllegalArgumentException("End date cannot be before start date.");
+            }
+
+            SickLeave sickLeave = sickLeaveRepository.findByAppointment_Id(appointmentId)
+                    .orElseGet(() -> SickLeave.builder().appointment(appointment).build());
+
+            sickLeave.setStartDate(sickLeaveStartDate);
+            sickLeave.setEndDate(sickLeaveEndDate);
+
+            sickLeaveRepository.save(sickLeave);
+        }
 
         appointment.setCompleted(true);
         appointmentRepository.save(appointment);
