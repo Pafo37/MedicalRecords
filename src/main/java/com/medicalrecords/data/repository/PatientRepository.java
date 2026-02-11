@@ -32,4 +32,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     Optional<Patient> findByUser(User user);
 
     Optional<Patient> findByUser_KeycloakId(String keycloakId);
+
+    Optional<Patient> findById(Long id);
 }

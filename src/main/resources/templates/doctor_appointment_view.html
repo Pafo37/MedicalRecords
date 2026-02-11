@@ -28,7 +28,10 @@
 
     <p><b>Patient:</b>
         <span th:text="${appointment.patient.user.firstName + ' ' + appointment.patient.user.lastName}"></span>
+        |
+        <a th:href="@{'/doctor/patients/' + ${appointment.patient.id} + '/history'}">View patient history</a>
     </p>
+
 
     <p><b>Patient notes:</b>
         <span th:text="${appointment.notes}"></span>

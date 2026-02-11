@@ -17,4 +17,6 @@ public interface InsuranceMonthRepository extends JpaRepository<InsuranceMonth, 
     );
 
     Optional<InsuranceMonth> findByPatientAndMonthValue(Patient patient, LocalDate monthValue);
+
+    List<InsuranceMonth> findAllByPatient_IdOrderByMonthValueDesc(Long patientId);
 }

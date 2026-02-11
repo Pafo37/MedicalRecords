@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient History</title>
+</head>
+<body>
+
+<div sec:authorize="hasRole('DOCTOR')">
+
+    <p><a th:href="@{/doctor/appointments}">← Back to appointments</a></p>
+
+    <h2>Patient History</h2>
+
+    <h3>Patient Info</h3>
+    <p><b>Name:</b>
+        <span th:text="${patient.user.firstName + ' ' + patient.user.lastName}"></span>
+    </p>
+
+    <p><b>EGN:</b>
+        <span th:text="${patient.egn}"></span>
+    </p>
+
+    <p><b>Insurance paid last 6 months:</b>
+        <span th:text="${patient.insurancePaidLast6Months ? 'YES' : 'NO'}"></span>
+    </p>
+
+    <hr/>
+
+    <h3>Insurance Months</h3>
+    <table border="1" cellpadding="6">
+        <thead>
+        <tr>
+            <th>Month</th>
+            <th>Status</th>
+            <th>Paid At</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:if="${insuranceMonths == null or insuranceMonths.isEmpty()}">
+            <td colspan="3">No insurance months found.</td>
+        </tr>
+
+        <tr th:each="m : ${insuranceMonths}">
+            <td th:text="${#temporals.format(m.monthValue, 'MM/yyyy')}"></td>
+            <td th:text="${m.paid ? 'PAID' : 'UNPAID'}"></td>
+            <td th:text="${m.paidAt != null ? #temporals.format(m.paidAt, 'dd/MM/yyyy') : '-'}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <hr/>
+
+    <h3>Completed Appointments (Diagnosis / Prescription / Sick Leave)</h3>
+
+    <table border="1" cellpadding="6">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Diagnosis</th>
+            <th>Prescription</th>
+            <th>Sick Leave</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:if="${appointments == null or appointments.isEmpty()}">
+            <td colspan="4">No completed appointments.</td>
+        </tr>
+
+        <tr th:each="a : ${appointments}">
+            <td th:text="${#temporals.format(a.visitDate, 'dd/MM/yyyy HH:mm')}"></td>
+
+            <td th:text="${a.diagnosis != null ? a.diagnosis.name : '-'}"></td>
+
+            <td>
+                <pre th:text="${a.prescriptionInstructions != null ? a.prescriptionInstructions : '-'}"></pre>
+            </td>
+
+            <td>
+                <div th:if="${a.sickLeave != null}">
+                    <span th:text="${#temporals.format(a.sickLeave.startDate, 'dd/MM/yyyy')}"></span>
+                    -
+                    <span th:text="${#temporals.format(a.sickLeave.endDate, 'dd/MM/yyyy')}"></span>
+                </div>
+                <div th:if="${a.sickLeave == null}">
+                    -
+                </div>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+<div sec:authorize="!hasRole('DOCTOR')">
+    <p>No access.</p>
+</div>
+
+</body>
+</html>
