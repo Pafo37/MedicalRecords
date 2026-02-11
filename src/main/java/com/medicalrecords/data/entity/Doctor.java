@@ -6,9 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Getter
 @Setter
@@ -36,9 +33,4 @@ public class Doctor extends BaseEntity {
     @Column(nullable = false)
     private boolean isPersonalDoctor = false;
 
-    @ManyToMany
-    @JoinTable(name = "doctor_specialties",
-            joinColumns = @JoinColumn(name = "doctor_id"),
-            inverseJoinColumns = @JoinColumn(name = "specialty_id"))
-    private Set<Specialty> specialties = new HashSet<>();
 }
