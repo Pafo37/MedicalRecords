@@ -18,4 +18,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     Optional<Appointment> findByIdAndPatient_User_KeycloakId(Long appointmentId, String patientKeycloakId);
 
+    List<Appointment> findAllByPatient_User_KeycloakIdAndCompletedTrueAndDiagnosisIsNotNullOrderByVisitDateDesc(String patientKeycloakId);
 }

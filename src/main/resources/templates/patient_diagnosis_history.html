@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>My Diagnosis History</title>
+</head>
+<body>
+
+<div sec:authorize="hasRole('PATIENT')">
+
+    <h2>My Diagnosis History</h2>
+
+    <table border="1" cellpadding="6">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Diagnosis</th>
+            <th>Doctor</th>
+            <th>Appointment</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:if="${appointments == null or appointments.isEmpty()}">
+            <td colspan="4">No diagnoses yet.</td>
+        </tr>
+
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${#temporals.format(appointment.visitDate, 'dd/MM/yyyy HH:mm')}"></td>
+
+            <td th:text="${appointment.diagnosis.name}"></td>
+
+            <td th:text="${appointment.doctor.user.firstName + ' ' + appointment.doctor.user.lastName}"></td>
+
+            <td>
+                <a th:href="@{'/patient/appointments/' + ${appointment.id}}">View</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p style="margin-top:15px;">
+        <a th:href="@{/}">Home</a>
+    </p>
+
+</div>
+
+<div sec:authorize="!hasRole('PATIENT')">
+    <p>No access.</p>
+</div>
+
+</body>
+</html>

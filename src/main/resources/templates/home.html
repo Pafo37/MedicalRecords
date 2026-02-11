@@ -19,10 +19,6 @@
 <!-- Navigation -->
 <ul>
     <li sec:authorize="hasRole('PATIENT')">
-        <a th:href="@{/patient/me}">My Record</a>
-    </li>
-
-    <li sec:authorize="hasRole('PATIENT')">
         <a th:href="@{/patient/appointments}">Appointments</a>
     </li>
 
@@ -32,6 +28,10 @@
 
     <li sec:authorize="hasRole('PATIENT')">
         <a th:href="@{/patient/sick-leaves}">My Sick Leaves</a>
+    </li>
+
+    <li sec:authorize="hasRole('PATIENT')">
+        <a th:href="@{/patient/diagnoses}">My Diagnoses</a>
     </li>
 
     <li sec:authorize="hasRole('PATIENT')">
