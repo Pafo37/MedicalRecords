@@ -20,7 +20,7 @@ public class HomeController {
     private final UserRepository userRepository;
     private final PatientRepository patientRepository;
 
-    @GetMapping("/")
+    @GetMapping({"/", "/home"})
     public String home(@AuthenticationPrincipal OidcUser oidcUser, Model model) {
 
         if (oidcUser == null) {
