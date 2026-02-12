@@ -1,6 +1,7 @@
 package com.medicalrecords.data.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class HealthInsurance extends BaseEntity {
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
+    @NotNull(message = "Month must not be null")
     @Column(name = "month", nullable = false)
     private LocalDate month;
 

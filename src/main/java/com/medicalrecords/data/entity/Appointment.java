@@ -1,6 +1,7 @@
 package com.medicalrecords.data.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -26,9 +27,11 @@ public class Appointment extends BaseEntity {
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 
+    @Size(max = 2000, message = "Maximum character length is 2000")
     @Column(length = 2000)
     private String notes;
 
+    @Size(max = 4000, message = "Maximum character length is 4000")
     @Column(name = "doctor_notes", length = 4000)
     private String doctorNotes;
 
@@ -39,7 +42,7 @@ public class Appointment extends BaseEntity {
     @JoinColumn(name = "diagnosis_id")
     private Diagnosis diagnosis;
 
-
+    @Size(max = 4000, message = "Maximum character length is 4000")
     @Column(name = "prescription_instructions", length = 4000)
     private String prescriptionInstructions;
 

@@ -1,6 +1,7 @@
 package com.medicalrecords.data.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,8 +13,10 @@ import java.time.LocalDate;
 @Builder
 public class AppointmentCompleteDTO {
 
+    @Size(max = 2000, message = "Maximum character length is 2000")
     private String doctorNotes;
 
+    @Size(max = 2000, message = "Maximum character length is 2000")
     private String prescriptionInstructions;
 
     private LocalDate sickLeaveStartDate;

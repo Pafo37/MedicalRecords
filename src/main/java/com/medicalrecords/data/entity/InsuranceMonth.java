@@ -21,9 +21,8 @@ public class InsuranceMonth extends BaseEntity {
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
-    // store month as first day of that month to keep it simple in MySQL
     @Column(name = "month_value", nullable = false)
-    private LocalDate monthValue; // e.g. 2026-02-01
+    private LocalDate monthValue;
 
     @Column(name = "paid", nullable = false)
     private boolean paid;

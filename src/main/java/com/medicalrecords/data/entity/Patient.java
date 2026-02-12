@@ -1,6 +1,8 @@
 package com.medicalrecords.data.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,12 +16,17 @@ import lombok.Setter;
 @Table(name = "patients")
 public class Patient extends BaseEntity {
 
+    @Size(min = 3, message = "Minimum character must be 3")
+    @NotNull(message = "First name must not be null")
     @Column(name = "first_name", nullable = false, length = 80)
     private String firstName;
 
+    @Size(min = 3, message = "Minimum character must be 3")
+    @NotNull(message = "Last name must not be null")
     @Column(name = "last_name", nullable = false, length = 80)
     private String lastName;
 
+    @Size(min = 10, max = 10, message = "EGN must be exactly 10 characters")
     @Column(name = "egn", nullable = false, unique = true, length = 10)
     private String egn;
 
