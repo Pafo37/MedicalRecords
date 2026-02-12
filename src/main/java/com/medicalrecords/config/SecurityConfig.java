@@ -43,6 +43,8 @@ public class SecurityConfig {
                         .requestMatchers("/register", "/register/**", "/error").permitAll()
                         .requestMatchers("/patient/**").hasRole("PATIENT")
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")
+                        .requestMatchers("/api/doctor/**").hasRole("DOCTOR")
+                        .requestMatchers("/api/patient/**").hasRole("PATIENT")
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().authenticated()
                 )
