@@ -19,7 +19,7 @@ public class AppointmentCompleteDTO {
     private LocalDate sickLeaveStartDate;
     private LocalDate sickLeaveEndDate;
 
-    @NotBlank
+    @NotBlank(message = "Diagnosis must not be blank")
     private String diagnosis;
 
 }

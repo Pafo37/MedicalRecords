@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @Builder
 public class AppointmentDTO {
 
-    @NotNull
+    @NotNull(message = "Doctor id must not be null")
     private Long doctorId;
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime visitDate;
 
-    @NotBlank
+    @NotBlank(message = "Notes should not be blank")
     private String notes;
 }

@@ -12,10 +12,10 @@ import java.time.LocalDate;
 @Builder
 public class SickLeaveDTO {
 
-    @NotNull
+    @NotNull(message = "Start date must not be null")
     private LocalDate startDate;
 
-    @NotNull
+    @NotNull(message = "End date must not be null")
     private LocalDate endDate;
 
 }
