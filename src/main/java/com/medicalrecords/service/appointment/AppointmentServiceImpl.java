@@ -115,10 +115,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         Appointment appointment = getAppointmentForDoctor(appointmentId, doctorKeycloakId);
         assertAppointmentIsToday(appointment);
 
-        // 1) Save doctor notes
         appointment.setDoctorNotes(formData.getDoctorNotes());
 
-        // 2) Create prescription if instructions provided
         String prescriptionInstructions = formData.getPrescriptionInstructions();
         if (prescriptionInstructions != null && !prescriptionInstructions.trim().isEmpty()) {
             Prescription prescription = Prescription.builder()
