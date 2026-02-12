@@ -37,14 +37,12 @@
         <span th:text="${appointment.notes}"></span>
     </p>
 
-    <!-- Not today -->
-    <div th:if="${!isScheduledForToday}" style="margin:15px 0; color:darkorange;">
-        You can view this appointment, but you can add notes/prescriptions/sick leave only on the scheduled day.
+    <div th:if="${isCompleted}" style="color: orange;">
+        This appointment is completed and is now read-only.
     </div>
 
-    <!-- Completed (even if today) -->
-    <div th:if="${isCompleted}" style="margin:15px 0; color:darkorange;">
-        This appointment is completed and is now read-only.
+    <div th:if="${!isCompleted and !isScheduledForToday}" style="color: orange;">
+        You can view this appointment, but you can add notes/prescriptions/sick leave only on the scheduled day.
     </div>
 
     <hr/>
