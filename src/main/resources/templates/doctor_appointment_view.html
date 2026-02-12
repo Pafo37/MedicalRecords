@@ -47,7 +47,6 @@
 
     <hr/>
 
-    <!-- ✅ ONE FORM for everything (only if canComplete) -->
     <div th:if="${canComplete}">
         <form th:action="@{'/doctor/appointments/' + ${appointment.id} + '/complete'}"
               th:object="${completeForm}"
@@ -103,7 +102,6 @@
         </form>
     </div>
 
-    <!-- ✅ Read-only mode when not allowed to complete -->
     <div th:if="${!canComplete}">
 
         <h3>Diagnosis</h3>

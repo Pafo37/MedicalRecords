@@ -122,7 +122,6 @@ public class DoctorAppointmentsController {
         return "redirect:/doctor/appointments/" + appointmentId;
     }
 
-    //TODO: might have to revert check
     @PostMapping("/{appointmentId}/complete")
     public String completeAppointment(@PathVariable("appointmentId") Long appointmentId,
                                       @Valid @ModelAttribute("completeForm") AppointmentCompleteDTO completeForm,

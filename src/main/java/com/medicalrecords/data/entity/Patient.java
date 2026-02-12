@@ -6,9 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -33,10 +30,6 @@ public class Patient extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    //TODO: check how the should this work
-    @OneToMany(mappedBy = "patient", orphanRemoval = true)
-    private List<HealthInsurance> healthInsurances = new ArrayList<>();
 
     @Column(name = "is_insurance_paid_last_six_months")
     private boolean isInsurancePaidLast6Months = false;
