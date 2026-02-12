@@ -1,4 +1,4 @@
-package com.medicalrecords.controller;
+package com.medicalrecords.api;
 
 import com.medicalrecords.data.dto.CreateDiagnosisDTO;
 import com.medicalrecords.data.entity.Diagnosis;
@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/diagnoses")
 @RequiredArgsConstructor
-public class DiagnosisController {
+public class DiagnosisRestController {
 
     private final DiagnosisService diagnosisService;
 
